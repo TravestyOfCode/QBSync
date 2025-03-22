@@ -8,6 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MediatR" Version="[12.4.*,12.5)" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<COMReference Include="QBXMLRP2Lib">
 			<WrapperTool>tlbimp</WrapperTool>
 			<VersionMinor>0</VersionMinor>
