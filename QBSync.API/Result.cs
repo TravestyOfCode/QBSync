@@ -10,6 +10,7 @@ public class Result
     public List<Error> Errors { get; } = new List<Error>();
 
     public static Result Ok() => new Result() { StatusCode = 200, StatusMessage = "Ok" };
+    public static Result<T> Ok<T>(T value) => new Result<T>(200, "Ok", value);
 }
 
 public class Result<T> : Result
@@ -38,7 +39,7 @@ public class Result<T> : Result
         Errors.Add(error);
     }
 
-    public static Result<T> Ok(T value) => new Result<T>(200, "Ok", value);
+
     public static implicit operator Result<T>(T value) => new Result<T>(200, "Ok", value);
     public static implicit operator Result<T>(Error error) => new Result<T>(error.StatusCode, error.StatusMessage, default, error);
 
