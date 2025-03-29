@@ -10,6 +10,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddMediatR(o => o.RegisterServicesFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()));
 
         builder.Services.AddControllers();
 
