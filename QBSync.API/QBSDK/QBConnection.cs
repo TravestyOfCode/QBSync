@@ -18,11 +18,11 @@ namespace QBSync.API.QBSDK
             _logger = logger;
         }
 
-        public string? ProcessRequest(string request)
+        public async Task<string?> ProcessRequest(string request, CancellationToken cancellationToken = default)
         {
             if (!Open())
             {
-                return null;
+                return await Task.FromResult((string?)null);
             }
 
             return _rp!.ProcessRequest(_ticket, request);
