@@ -4,3 +4,76 @@ GET {{QBSync.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{QBSync.API_HostAddress}}/SalesOrder/SampleCreateJSON
+Accept: application/json
+
+###
+
+POST {{QBSync.API_HostAddress}}/SalesOrder/Create/
+Content-Type: application/json
+
+{
+  "CustomerRef":{
+    "ListID":"123-456",
+    "FullName":"Test:Customer"
+  },
+  "TemplateRef":{
+    "FullName":"Template:Test"
+  },  
+ "SalesOrderLines":[
+    {
+      "$type": "SalesOrderItemLine",
+      "ItemRef":{
+        "FullName": "FL:MM"
+      },
+      "Desc":"Work that MM performed",
+      "Quantity": 1.5
+    },
+    {
+      "$type": "SalesOrderGroupItemLine",
+      "ItemRef": {
+        "FullName" : "A"
+      }
+    }
+  ],
+  
+  "TxnDate": "2025-03-01",
+  "RefNumber": "60255"
+}
+
+###
+
+POST {{QBSync.API_HostAddress}}/SalesOrder/Update/
+Content-Type: application/json
+
+{
+  "TxnID": "99-99999",
+  "EditSequence": "ABCD12341234ABCD",
+  "CustomerRef":{
+    "ListID":"123-456",
+    "FullName":"Test:Customer"
+  },
+  "TemplateRef":{
+    "FullName":"Template:Test"
+  },  
+ "SalesOrderLines":[
+    {
+      "$type": "SalesOrderItemLine",
+      "ItemRef":{
+        "FullName": "FL:MM"
+      },
+      "Desc":"Work that MM performed",
+      "Quantity": 1.5
+    },
+    {
+      "$type": "SalesOrderGroupItemLine",
+      "ItemRef": {
+        "FullName" : "A"
+      }
+    }
+  ],
+  
+  "TxnDate": "2025-03-01",
+  "RefNumber": "60255"
+}
