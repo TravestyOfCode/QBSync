@@ -51,4 +51,8 @@ internal static class XElementExtensions
         }
     }
 
+    public static string? AsString(this XElement? element) => element?.Value;
+    public static decimal AsDecimalOrValue(this XElement? element, decimal defaultValue = 0.0m) => element == null ? defaultValue : decimal.TryParse(element.Value, out var value) ? value : defaultValue;
+    public static decimal AsDecimal(this XElement element) => decimal.TryParse(element?.Value, out var value) ? value : throw new InvalidOperationException("Unable to convert XElement to decimal.");
+
 }
