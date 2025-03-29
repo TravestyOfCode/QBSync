@@ -43,7 +43,7 @@ internal static class XElementExtensions
             element.Add(new XElement(name, value.Value.ToString("yyyy-MM-dd")));
         }
     }
-    public static void Append(this XElement element, decimal? value, int decimalPlaces, [CallerArgumentExpression(nameof(value))] string name = "")
+    public static void Append(this XElement element, decimal? value, int decimalPlaces = 2, [CallerArgumentExpression(nameof(value))] string name = "")
     {
         if (value != null)
         {
