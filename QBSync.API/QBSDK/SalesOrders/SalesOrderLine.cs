@@ -7,7 +7,7 @@ namespace QBSync.API.QBSDK;
 [JsonDerivedType(typeof(SalesOrderGroupItemLine), typeDiscriminator: "SalesOrderGroupItemLine")]
 public abstract class SalesOrderLine
 {
-    public string TxnLineID { get; set; } = "-1";
+    public string? TxnLineID { get; set; } = "-1";
     public ListRef? ItemRef { get; set; }
     public string? Desc { get; set; }
     public decimal? Quantity { get; set; }
@@ -18,7 +18,7 @@ public abstract class SalesOrderLine
 
 public class SalesOrderGroupItemLine : SalesOrderLine
 {
-    public List<SalesOrderItemLine> Items { get; } = new List<SalesOrderItemLine>();
+    public List<SalesOrderItemLine> Items { get; } = [];
 
     public override XElement ToAddRq()
     {
@@ -39,6 +39,28 @@ public class SalesOrderGroupItemLine : SalesOrderLine
             elem.Add(item.ToModRq());
         }
         return elem;
+    }
+
+    internal void Parse(XElement ret)
+    {
+        foreach (var element in ret.Elements())
+        {
+            switch (element.Name.LocalName)
+            {
+                case nameof(TxnLineID): TxnLineID = element.AsString(); break;
+                case "ItemGroupRef": ItemRef = ListRef.Create(element); break;
+                case nameof(Desc): Desc = element.AsString(); break;
+                case nameof(Quantity): Quantity = element.AsDecimal(); break;
+                case "SalesOrderLineRet": Items.Add(SalesOrderItemLine.Create(element)); break;
+            }
+        }
+    }
+
+    internal static SalesOrderGroupItemLine Create(XElement salesOrderLineGroupRet)
+    {
+        var line = new SalesOrderGroupItemLine();
+        line.Parse(salesOrderLineGroupRet);
+        return line;
     }
 }
 
@@ -68,5 +90,28 @@ public class SalesOrderItemLine : SalesOrderLine
         elem.Append(Rate);
         elem.Append(Amount);
         return elem;
+    }
+
+    internal void Parse(XElement ret)
+    {
+        foreach (var element in ret.Elements())
+        {
+            switch (element.Name.LocalName)
+            {
+                case nameof(TxnLineID): TxnLineID = element.AsString(); break;
+                case nameof(ItemRef): ItemRef = ListRef.Create(element); break;
+                case nameof(Desc): Desc = element.AsString(); break;
+                case nameof(Quantity): Quantity = element.AsDecimal(); break;
+                case nameof(Rate): Rate = element.AsDecimal(); break;
+                case nameof(Amount): Amount = element.AsDecimal(); break;
+            }
+        }
+    }
+
+    internal static SalesOrderItemLine Create(XElement salesOrderLineRet)
+    {
+        var line = new SalesOrderItemLine();
+        line.Parse(salesOrderLineRet);
+        return line;
     }
 }
