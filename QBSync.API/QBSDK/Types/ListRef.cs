@@ -15,6 +15,20 @@ public class ListRef
         result.Append(FullName);
         return result;
     }
+
+    internal static ListRef? Create(XElement? listRef)
+    {
+        if (listRef == null)
+        {
+            return null;
+        }
+
+        return new ListRef()
+        {
+            ListID = listRef.Element("ListID")?.Value,
+            FullName = listRef.Element("FullName")?.Value
+        };
+    }
 }
 
 internal static class ListRefExtensions
